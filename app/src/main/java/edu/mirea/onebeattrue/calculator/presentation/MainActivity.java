@@ -1,8 +1,10 @@
-package edu.mirea.onebeattrue.calculator;
+package edu.mirea.onebeattrue.calculator.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import edu.mirea.onebeattrue.calculator.R;
 
 public class MainActivity extends AppCompatActivity {
 
