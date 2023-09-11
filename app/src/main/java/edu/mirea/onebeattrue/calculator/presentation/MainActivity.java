@@ -2,7 +2,6 @@ package edu.mirea.onebeattrue.calculator.presentation;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;

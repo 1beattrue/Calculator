@@ -1,5 +1,7 @@
 package edu.mirea.onebeattrue.calculator.data;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import edu.mirea.onebeattrue.calculator.domain.Repository;
@@ -24,13 +26,16 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void makeOpposite() {
+        if (currentNumber.equals(ERROR)) return;
         currentNumber = String.valueOf(-Double.parseDouble(currentNumber));
         formatResult();
     }
 
     @Override
     public void findPercent() {
+        if (currentNumber.equals(ERROR)) return;
         currentNumber = String.valueOf(Double.parseDouble(currentNumber) / 100);
+        formatResult();
     }
 
     @Override
@@ -40,12 +45,18 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void addNumber(String number) {
+        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
+
         if (currentNumber.equals(NULL)) currentNumber = number;
         else currentNumber += number;
     }
 
     @Override
     public void addComma() {
+        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
+
         if (currentNumber.contains(COMMA))
             return;
         currentNumber += COMMA;
@@ -60,6 +71,10 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void makeResult() {
+        if (currentNumber.equals(ERROR) || previousNumber.equals(ERROR)) {
+            currentNumber = ERROR;
+            return;
+        }
         switch (currentOperation) {
             case ADD -> currentNumber = String.valueOf(
                     Double.parseDouble(previousNumber) + Double.parseDouble(currentNumber)
@@ -84,19 +99,27 @@ public class RepositoryImpl implements Repository {
 
             }
         }
+        currentOperation = Operation.NULL;
         formatResult();
     }
 
     private void formatResult() {
         if (currentNumber.equals(ERROR)) return;
 
-        if (Double.parseDouble(currentNumber) % 1 == 0) {
-            currentNumber = String.valueOf((int) Double.parseDouble(currentNumber));
+        double doubleCurrentNumber = Double.parseDouble(currentNumber);
+        if (doubleCurrentNumber < Long.MAX_VALUE && doubleCurrentNumber % 1 == 0) {
+            currentNumber = String.valueOf((long) doubleCurrentNumber);
         } else {
-            currentNumber = String.valueOf(Double.parseDouble(currentNumber));
+            currentNumber = String.valueOf(doubleCurrentNumber);
+        }
+
+        if (currentNumber.length() > MAX_LENGTH || currentNumber.contains(EXPONENT)) {
+            currentNumber = String.format(Locale.US, "%.2E", doubleCurrentNumber);
         }
     }
 
+    private static final int MAX_LENGTH = 10;
+    private static final String EXPONENT = "E";
     private static final String NULL = "0";
     private static final String COMMA = ".";
     private static final String ERROR = "Ошибка";
