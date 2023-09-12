@@ -118,7 +118,7 @@ public class RepositoryImpl implements Repository {
                 );
             }
             case DIVIDE -> {
-                if (currentNumber.equals(NULL))
+                if (currentNumber.equals(NULL) || Double.parseDouble(currentNumber) == 0)
                     currentNumber = ERROR;
                 else
                     currentNumber = String.valueOf(
