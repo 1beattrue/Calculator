@@ -27,14 +27,14 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void makeOpposite() {
-        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.equals(ERROR) || currentNumber.equals(INFINITY)) return;
         currentNumber = String.valueOf(-Double.parseDouble(currentNumber));
         formatResult();
     }
 
     @Override
     public void findPercent() {
-        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.equals(ERROR) || currentNumber.equals(INFINITY)) return;
         currentNumber = String.valueOf(Double.parseDouble(currentNumber) / 100);
         formatResult();
     }
@@ -46,11 +46,12 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void addNumber(String number) {
-        if (currentNumber.equals(ERROR)) return;
-        if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
+        if (currentNumber.equals(ERROR) || currentNumber.equals(INFINITY)) return;
 
         if (isNextNumber)
             currentNumber = NULL;
+
+        if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
 
         if (currentNumber.equals(NULL)) currentNumber = number;
         else currentNumber += number;
@@ -60,11 +61,12 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void addComma() {
-        if (currentNumber.equals(ERROR)) return;
-        if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
+        if (currentNumber.equals(ERROR) || currentNumber.equals(INFINITY)) return;
 
         if (isNextNumber)
             currentNumber = NULL;
+
+        if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
 
         if (currentNumber.contains(COMMA))
             return;
@@ -75,7 +77,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void deleteSymbol() {
-        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.equals(ERROR) || currentNumber.equals(INFINITY)) return;
         if (currentNumber.contains(EXPONENT)) return;
 
         int minLength = MIN_LENGTH;
@@ -99,7 +101,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void makeResult() {
-        if (currentNumber.equals(ERROR) || previousNumber.equals(ERROR)) {
+        if (currentNumber.equals(ERROR) || previousNumber.equals(ERROR) || currentNumber.equals(INFINITY)) {
             currentNumber = ERROR;
             return;
         }
@@ -137,7 +139,7 @@ public class RepositoryImpl implements Repository {
     }
 
     private void formatResult() {
-        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.equals(ERROR) || currentNumber.equals(INFINITY)) return;
 
         double doubleCurrentNumber = Double.parseDouble(currentNumber);
         if (doubleCurrentNumber < Long.MAX_VALUE && doubleCurrentNumber % 1 == 0) {
@@ -151,6 +153,7 @@ public class RepositoryImpl implements Repository {
         }
     }
 
+    private static final String INFINITY = "Infinity";
     private static final String MINUS = "-";
     private static final int MIN_LENGTH = 1;
     private static final int MAX_LENGTH = 10;
