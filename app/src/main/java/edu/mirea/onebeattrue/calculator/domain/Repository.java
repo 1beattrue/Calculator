@@ -19,4 +19,6 @@ public interface Repository {
     void setOperation(Operation operation);
 
     void makeResult();
+
+    void setIsNextNumber(boolean isNextNumber);
 }

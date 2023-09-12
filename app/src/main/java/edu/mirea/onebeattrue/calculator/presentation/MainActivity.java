@@ -184,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
 
         button.setBackgroundTintList(colorStateList);
         button.setTextColor(textColor);
+
+        repository.setIsNextNumber(true);
     }
 
     private void updateUi() {

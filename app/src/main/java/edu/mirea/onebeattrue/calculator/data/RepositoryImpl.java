@@ -13,6 +13,7 @@ public class RepositoryImpl implements Repository {
     RepositoryImpl() {
     }
 
+    private boolean isNextNumber = false;
     private String previousNumber = NULL;
     private String currentNumber = NULL;
     private Operation currentOperation = Operation.NULL;
@@ -48,8 +49,13 @@ public class RepositoryImpl implements Repository {
         if (currentNumber.equals(ERROR)) return;
         if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
 
+        if (isNextNumber)
+            currentNumber = NULL;
+
         if (currentNumber.equals(NULL)) currentNumber = number;
         else currentNumber += number;
+
+        isNextNumber = false;
     }
 
     @Override
@@ -57,9 +63,14 @@ public class RepositoryImpl implements Repository {
         if (currentNumber.equals(ERROR)) return;
         if (currentNumber.length() >= MAX_LENGTH || currentNumber.contains(EXPONENT)) return;
 
+        if (isNextNumber)
+            currentNumber = NULL;
+
         if (currentNumber.contains(COMMA))
             return;
         currentNumber += COMMA;
+
+        isNextNumber = false;
     }
 
     @Override
@@ -83,7 +94,7 @@ public class RepositoryImpl implements Repository {
     public void setOperation(Operation operation) {
         currentOperation = operation;
         previousNumber = currentNumber;
-        currentNumber = NULL;
+        //currentNumber = NULL;
     }
 
     @Override
@@ -118,6 +129,11 @@ public class RepositoryImpl implements Repository {
         }
         currentOperation = Operation.NULL;
         formatResult();
+    }
+
+    @Override
+    public void setIsNextNumber(boolean isNextNumber) {
+        this.isNextNumber = isNextNumber;
     }
 
     private void formatResult() {
