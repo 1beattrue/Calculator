@@ -14,6 +14,7 @@ public interface Repository {
     void addNumber(String number);
 
     void addComma();
+    void deleteSymbol();
 
     void setOperation(Operation operation);
 

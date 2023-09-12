@@ -63,6 +63,23 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public void deleteSymbol() {
+        if (currentNumber.equals(ERROR)) return;
+        if (currentNumber.contains(EXPONENT)) return;
+
+        int minLength = MIN_LENGTH;
+        if (currentNumber.startsWith(MINUS)) {
+            minLength++;
+        }
+        if (currentNumber.length() > minLength) {
+            currentNumber = currentNumber.substring(0, currentNumber.length() - 1);
+        }
+        else if (currentNumber.length() == minLength) {
+            currentNumber = NULL;
+        }
+    }
+
+    @Override
     public void setOperation(Operation operation) {
         currentOperation = operation;
         previousNumber = currentNumber;
@@ -118,6 +135,8 @@ public class RepositoryImpl implements Repository {
         }
     }
 
+    private static final String MINUS = "-";
+    private static final int MIN_LENGTH = 1;
     private static final int MAX_LENGTH = 10;
     private static final String EXPONENT = "E";
     private static final String NULL = "0";

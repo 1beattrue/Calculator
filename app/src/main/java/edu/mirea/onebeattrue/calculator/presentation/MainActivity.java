@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         setupNumberButtons();
         setupOperationButtons();
+
+        binding.btnBackspace.setOnClickListener(view -> {
+            repository.deleteSymbol();
+            updateUi();
+        });
     }
 
     private void setupOperationButtons() {

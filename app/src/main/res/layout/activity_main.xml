@@ -7,18 +7,28 @@
     tools:context=".presentation.MainActivity"
     android:background="@color/black">
 
+    <ImageButton
+        android:backgroundTint="@color/black"
+        android:src="@drawable/ic_backspace"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/btnBackspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/tvResult"
+        />
 
     <TextView
         android:textColor="@color/white"
-        android:layout_marginEnd="8dp"
-        android:textSize="48sp"
+        android:layout_marginStart="8dp"
+        android:textSize="56sp"
         android:textStyle="bold"
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/number"
-        app:layout_constraintEnd_toEndOf="parent"
-
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
     <androidx.constraintlayout.widget.Guideline
